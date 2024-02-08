@@ -260,62 +260,178 @@ from typing import Callable
 
 
 # Create a decorator that logs (prints and to the file) the function name, time and results every time the function is called.
-import datetime
-import logging
+# import datetime
+# import logging
 
-logging.basicConfig(level=logging.DEBUG, filename="data.log", filemode="w")
-
-
-def log_func_info(fn: Callable):
-
-    def wrapper():
-        current_time = datetime.datetime.now()
-        print(f"Current time is: ", current_time)
-        logging.info(f"Current time is: {current_time}")
-        result = fn()
-        print(f"You called function: ", fn.__name__)
-        logging.info(f"You called function: {fn.__name__}")
-        logging.info(f"The result of the function is: {result}")
-        return f"The result of the function is: {result}"
-
-    return wrapper
+# logging.basicConfig(level=logging.DEBUG, filename="data.log", filemode="w")
 
 
-@log_func_info
-def adding_two_numbers():
-    return 2 + 2
+# def log_func_info(fn: Callable):
+
+#     def wrapper():
+#         current_time = datetime.datetime.now()
+#         print(f"Current time is: ", current_time)
+#         logging.info(f"Current time is: {current_time}")
+#         result = fn()
+#         print(f"You called function: ", fn.__name__)
+#         logging.info(f"You called function: {fn.__name__}")
+#         logging.info(f"The result of the function is: {result}")
+#         return f"The result of the function is: {result}"
+
+#     return wrapper
 
 
-time = adding_two_numbers()
-print(time)
-
-import logging
-from typing import Callable
+# @log_func_info
+# def adding_two_numbers():
+#     return 2 + 2
 
 
-logging.basicConfig(
-    level=logging.INFO,
-    filename="logger.log",
-    filemode="a",
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    datefmt="%d/%m/%Y %H:%M:%S",
-)
+# time = adding_two_numbers()
+# print(time)
+
+# import logging
+# from typing import Callable
 
 
-def logger(fn: Callable) -> str:
-
-    def wrapper():
-        my_func = fn()
-        logging.info(f"Function {fn.__name__!r}")
-        print(f"Function {fn.__name__!r}")
-        return my_func
-
-    return wrapper
+# logging.basicConfig(
+#     level=logging.INFO,
+#     filename="logger.log",
+#     filemode="a",
+#     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+#     datefmt="%d/%m/%Y %H:%M:%S",
+# )
 
 
-@logger
-def count_smth():
-    return 50 * 50
+# def logger(fn: Callable) -> str:
+
+#     def wrapper():
+#         my_func = fn()
+#         logging.info(f"Function {fn.__name__!r}")
+#         print(f"Function {fn.__name__!r}")
+#         return my_func
+
+#     return wrapper
 
 
-print(count_smth())
+# @logger
+# def count_smth():
+#     return 50 * 50
+
+
+# print(count_smth())
+
+# import time
+# from typing import Callable
+
+
+# def measure_time(fn: Callable):
+
+#     def wrapper(*args, **kwargs):
+#         print(args, kwargs)
+#         start_time = time.time()
+#         procers = fn(*args, **kwargs)
+#         end_time = time.time()
+#         duration = end_time - start_time
+#         print(f"Function {fn.__name__} took {duration:.6f} seconds to execute.")
+#         return procers
+
+#     return wrapper
+
+
+# @measure_time
+# def example_function(nr: int):
+#     for i in range(nr):
+#         i = i**2
+#     return "Done"
+
+# @measure_time
+# def next_funtion(a: int, b: int, c: int):
+#     return a + b + c
+
+
+# example_function(nr=100000)
+
+# print(example_function(nr=100000))
+
+# result = next_funtion(10, 15, c=20)
+# print(result)
+
+# Write a decorator that should check if all arguments passed to the method are positive.
+# If not, it should raise a ValueError. A function should calculate square of numbers.
+
+
+# def if_positive_numbers(fn: Callable):
+
+#     def wrapper(*args, **kwargs):
+#         is_negative = False
+#         for arg in args:
+#             if arg < 0:
+#                 is_negative = True
+
+#         if not is_negative:
+#             my_func = fn(*args, **kwargs)
+#             return my_func
+#         else:
+#             raise ValueError("Please use positive numbers!")
+
+#     return wrapper
+
+
+# @if_positive_numbers
+# def square_of_numbers(nr_one: int, nr_two: int) -> int:
+#     return nr_one**2, nr_two**2
+
+
+# print(square_of_numbers(1, 3))
+# print(square_of_numbers(1, -9))
+
+
+# Write a decorator that catches any exceptions thrown by the function and prints an error message instead of letting the program crash.
+
+# from typing import Callable
+
+
+# def error_hunter(fn: Callable):
+
+#     def wrapper(*args, **kwargs):
+#         try:
+#             result = fn(*args, **kwargs)
+#             return result
+#         except Exception as err:
+#             print(f"Error: {err}")
+
+#     return wrapper
+
+
+# @error_hunter
+# def divide_by_zero(number: int):
+#     return number / 0
+
+
+# print(divide_by_zero(4))
+
+# Write a decorato that retries a function if it raises an exception. The function should be retried 3 times before finally raising the exception.
+
+# def error_hunter(fn: Callable):
+
+#     def wrapper(*args, **kwargs):
+#         counter = 0
+#         for _ in range(3):
+#             try:
+#                 result = fn(*args, **kwargs)
+#                 return result
+#             except Exception:
+#                 pass
+#             counter += 1
+#             print(counter)
+#         return fn(*args, **kwargs)
+
+#     return wrapper
+
+
+# @error_hunter
+# def divide_by_zero(number: int):
+#     return number / 0
+
+
+# print(divide_by_zero(4))

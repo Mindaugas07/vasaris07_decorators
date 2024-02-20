@@ -435,3 +435,43 @@ from typing import Callable
 
 
 # print(divide_by_zero(4))
+
+
+def my_decorator(fn: Callable) -> None:
+
+    def wraper(*args) -> str:
+        my_func = fn(*args)
+        print(f"My name is {my_func}")
+        return my_func
+
+    return wraper
+
+
+# @my_decorator
+# def return_name(name: str) -> str:
+#     return name
+
+
+# print(return_name("Mindaugas"))
+
+
+class Letters:
+    def __init__(self, name: str) -> None:
+        self.name = name
+
+    @my_decorator
+    def upper_case(self) -> str:
+        return self.name.upper()
+
+    @my_decorator
+    def lower_case(self) -> str:
+        return self.name.lower()[::-1]
+
+    @my_decorator
+    def split_string(self) -> list:
+        return [*self.name]
+
+
+first_try = Letters(name="Gediminas")
+
+first_try.upper_case(), first_try.lower_case(), first_try.split_string()

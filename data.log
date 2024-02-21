@@ -1,3 +1,14 @@
 INFO:root:Current time is: 2024-02-07 20:53:42.554074
 INFO:root:You called function: adding_two_numbers
 INFO:root:The result of the function is: 4
+21/02/2024 20:26:59 - root - INFO - Function succeeded after 1 attempts. Result: 1.6666666666666667
+21/02/2024 20:27:04 - root - INFO - Function succeeded after 1 attempts. Result: 1.25
+21/02/2024 20:27:41 - root - INFO - Function succeeded after 1 attempts. Result: 2.5
+21/02/2024 20:27:43 - root - INFO - Function succeeded after 1 attempts. Result: 1.6666666666666667
+21/02/2024 20:27:45 - root - INFO - Function succeeded after 1 attempts. Result: 1.25
+21/02/2024 20:27:45 - root - INFO - Function succeeded after 1 attempts. Result: 2.5
+21/02/2024 20:27:47 - root - INFO - Function succeeded after 1 attempts. Result: 2.5
+21/02/2024 20:27:48 - root - INFO - Function succeeded after 1 attempts. Result: 1.25
+21/02/2024 20:27:49 - root - INFO - Function succeeded after 1 attempts. Result: 1.6666666666666667
+21/02/2024 20:27:51 - root - INFO - Function succeeded after 1 attempts. Result: 1.6666666666666667
+21/02/2024 20:27:52 - root - INFO - Function succeeded after 2 attempts. Result: 1.25

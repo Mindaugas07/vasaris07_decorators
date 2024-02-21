@@ -437,41 +437,141 @@ from typing import Callable
 # print(divide_by_zero(4))
 
 
-def my_decorator(fn: Callable) -> None:
+# def my_decorator(fn: Callable) -> None:
 
-    def wraper(*args) -> str:
-        my_func = fn(*args)
-        print(f"My name is {my_func}")
-        return my_func
+#     def wraper(*args) -> str:
+#         my_func = fn(*args)
+#         print(f"My name is {my_func}")
+#         return my_func
 
-    return wraper
+#     return wraper
 
 
-# @my_decorator
-# def return_name(name: str) -> str:
+# # @my_decorator
+# # def return_name(name: str) -> str:
+# #     return name
+
+
+# # print(return_name("Mindaugas"))
+
+
+# class Letters:
+#     def __init__(self, name: str) -> None:
+#         self.name = name
+
+#     @my_decorator
+#     def upper_case(self) -> str:
+#         return self.name.upper()
+
+#     @my_decorator
+#     def lower_case(self) -> str:
+#         return self.name.lower()[::-1]
+
+#     @my_decorator
+#     def split_string(self) -> list:
+#         return [*self.name]
+
+
+# first_try = Letters(name="Gediminas")
+
+# first_try.upper_case(), first_try.lower_case(), first_try.split_string()
+
+
+# from typing import Callable
+
+
+# def repeat(num_times: int):
+#     def repeat_decorator(fn: Callable):
+#         def wrapper(*args, **kwargs):
+#             name = fn(*args, **kwargs)
+#             for _ in range(num_times):
+#                 print(f"Hello {name}")
+#             return name
+
+#         return wrapper
+
+#     return repeat_decorator
+
+
+# @repeat(num_times=3)
+# def print_name(name: str) -> str:
 #     return name
 
 
-# print(return_name("Mindaugas"))
+# @repeat(num_times=5)
+# def print_my_age(age: int) -> int:
+#     return age
 
 
-class Letters:
-    def __init__(self, name: str) -> None:
-        self.name = name
+# print_my_age(16)
+# print_name("Vilius")
 
-    @my_decorator
-    def upper_case(self) -> str:
-        return self.name.upper()
-
-    @my_decorator
-    def lower_case(self) -> str:
-        return self.name.lower()[::-1]
-
-    @my_decorator
-    def split_string(self) -> list:
-        return [*self.name]
+# : Create a decorator factory (decotator) that applies a given function to the result of the decorated function.
+# Example, main function is to add 2 nubmers , but decorator factory is to return square of the nubmers.
+# example: print(add_numbers(1,2)) returns 9 .
 
 
-first_try = Letters(name="Gediminas")
+# def do_pow(function: Callable) -> Callable:
+#     def useless_decorator(fn: Callable):
+#         def wrapper(*args, **kwargs):
+#             my_func = fn(*args, **kwargs)
+#             return function(my_func)
 
-first_try.upper_case(), first_try.lower_case(), first_try.split_string()
+#         return wrapper
+
+#     return useless_decorator
+
+
+# def raise_square(number: int) -> int:
+#     return number**2
+
+
+# @do_pow(function=raise_square)
+# def sum_numbers(a: int, b: int) -> int:
+#     return a + b
+
+
+# print(sum_numbers(1, 2))
+
+# Create a decorator factory logging decorator that executes decorated function n given times if function raises an error.
+# When function is correctly executed , logging should log to file how many times executions failed, and the result of succesfull execution.
+# Create any function that could prbably fail.
+
+
+from typing import Callable, Union
+from random import randint
+import logging
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    filename="data.log",
+    filemode="a",
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    datefmt="%d/%m/%Y %H:%M:%S",
+)
+
+
+def repeat_n_times_or_till_success(repeat_times):
+    def attempt_function(fn: Callable):
+        def wrapper(*args, **kwargs):
+            for i in range(repeat_times):
+                try:
+                    result = fn(*args, **kwargs)
+                    logging.info(
+                        f"Function succeeded after {i+1} attempts. Result: {result}"
+                    )
+                    return result
+                except Exception:
+                    pass
+
+        return wrapper
+
+    return attempt_function
+
+
+@repeat_n_times_or_till_success(repeat_times=7)
+def random_division(number_to_divide: Union[int, float]) -> Union[int, float]:
+    return number_to_divide / randint(0, 4)
+
+
+print(random_division(5))
